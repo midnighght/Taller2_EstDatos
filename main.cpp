@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <cstdlib>
-#include <ctime>
+#include "ATS.h"
 #include "ATOS.h"
 #include "Board.h"
 
@@ -54,13 +54,60 @@ void play()
 // Función marcador de posición para jugar contra IA sin optimizar
 void playATOS()
 {
-
+    Board board;
 }
 
 // Función marcador de posición para jugar contra IA optimizada
-void playATS()
-{
-    cout << "Modo de juego contra IA optimizada aún no implementado.\n";
+void playATS() {
+    Board board;
+    ATS ai;
+
+    char player = HUMAN_PLAYER;
+    int turn = 0;
+
+    while (true) {
+        board.print();
+
+        if (player == HUMAN_PLAYER) {
+            cout << "Tu turno" << endl;
+            cout << "Ingrese fila y columna (separados por un espacio): ";
+            int row, col;
+            cin >> row >> col;
+            row--;
+            col--;
+
+            if (board.isValidMovement(row, col)) {
+                board.makeMove(row, col, player);
+                turn++;
+                if (board.checkWin(player)) {
+                    board.print();
+                    cout << "Ganaste!\n";
+                    break;
+                }
+                player = ATS_PLAYER;
+            } else {
+                cout << "Movimiento invalido. Intente de nuevo.\n";
+            }
+        } else {
+            cout << "Turno de ATS...\n";
+            Move bestMove = ai.findBestMove(board.getGrid());
+            board.makeMove(bestMove.row, bestMove.col, player);
+            turn++;
+
+            if (board.checkWin(player)) {
+                board.print();
+                cout << "Perdiste!\n";
+                break;
+            }
+            player = HUMAN_PLAYER;
+        }
+
+        if (turn == 9) {
+            board.print();
+            cout << "Es un empate!\n";
+            break;
+        }
+    }
 }
 
 // Función para mostrar el menú
