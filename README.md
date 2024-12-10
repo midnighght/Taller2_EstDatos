@@ -53,7 +53,7 @@ La poda Alfa-Beta optimiza el algoritmo Minimax reduciendo el número de nodos q
          |               |   
      X | O | X       X | O | X  
      X | O | O       X | O | O  
-     O | X | X       x | X | O  
+     O | X | X       X | X | O  
         v=0             v=10
 ```
 
